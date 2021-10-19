@@ -1,6 +1,7 @@
 #include "GameCore.h"
 
 #include "Input.h"
+#include "TerminalController.h"
 #include "../gameplay/Game.h"
 
 #include <iostream>
@@ -8,6 +9,9 @@
 #include <chrono>
 
 namespace core {
+
+    GameCore::GameCore() {}
+    GameCore::~GameCore() {}
 
     void GameCore::Run() {
         using namespace std::chrono_literals;

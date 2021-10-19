@@ -1,8 +1,6 @@
 #pragma once
 
 #include <memory>
-#include "Input.h"
-#include "TerminalController.h"
 
 namespace game {
     class Game;
@@ -16,6 +14,9 @@ namespace core {
 class GameCore {
 
 public:
+    GameCore();
+    ~GameCore();
+
     void Run();
 
     void Initialize();

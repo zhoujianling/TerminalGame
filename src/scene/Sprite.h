@@ -1,23 +1,26 @@
 #pragma once
-#include "Node.h"
+#include "Component.h"
 
 namespace scene {
 
-class Sprite {
-
-public:
-
-private:
-    SceneNode* m_node = nullptr;
+// decoupled from sprite
+class SpritePattern {
 
 };
 
-class SpriteNode : public SceneNode {
+// class SpritePatternFactory {
+
+// };
+
+class Sprite : public ComponentBase {
 
 public:
+    ~Sprite() override {}
+
+    ComponentType GetType() override  { return ComponentType::Sprite; }
 
 private:
-    Sprite m_sprite;
+    SpritePattern m_pattern;
 
 };
 

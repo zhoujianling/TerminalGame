@@ -1,21 +1,19 @@
 #pragma once
-#include "Node.h"
+#include "Component.h"
 
 namespace scene {
 
-class Camera {
+class Camera : public ComponentBase {
 
 public:
     Camera();
 
-private:
-    SceneNode* m_attached_node = nullptr;
-};
+    ~Camera() override {}
 
-class CameraNode : public SceneNode {
+    ComponentType GetType() override  { return ComponentType::Camera; }
 
 private:
-    Camera m_camera; // owns it
+
 };
-    
+
 }

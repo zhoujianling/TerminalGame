@@ -4,6 +4,7 @@ project (terminal_game) #设置工程名
 set (
     SRC_FILES
     Main.cpp
+    TankGame.cpp
     core/GameCore.cpp
     core/Input.cpp
     core/Terminal.cpp
@@ -11,6 +12,7 @@ set (
     gameplay/Entity.cpp
     gameplay/Game.cpp
     scene/Camera.cpp
+    scene/Component.cpp
     scene/Node.cpp
     scene/Scene.cpp
     scene/Sprite.cpp

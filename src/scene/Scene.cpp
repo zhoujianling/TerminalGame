@@ -1,6 +1,9 @@
 #include "Scene.h"
 #include "Camera.h"
+#include "Sprite.h"
 #include <vector>
+
+#include "assert.h"
 
 namespace scene {
 
@@ -9,7 +12,7 @@ Scene::Scene(const std::string& name)
     , m_name(name)
 {
     m_all_nodes[m_root.m_name] = &m_root;
-
+    m_root.m_scene = this;
     // m_camera
 }
 
@@ -27,9 +30,15 @@ void Scene::Tick(float delta_time) {
     UpdateNodesTransform();
 }
 
+scene::Sprite* Scene::CreateSprite() {
+    auto* sprite = new Sprite;
+    return sprite;
+}
+
 SceneNode* Scene::CreateSceneNode(const std::string& name) {
     if (m_all_nodes.find(name) == m_all_nodes.end()) {
         auto* new_node = new SceneNode(name);
+        new_node->m_scene = this;
         m_all_nodes[name] = new_node;
         return new_node;
     }
@@ -45,6 +54,12 @@ SceneNode* Scene::FindSceneNode(const std::string& name) {
         return nullptr;
     }
     return m_all_nodes[name];
+}
+
+void Scene::SetActiveCamera(Camera* camera) {
+    assert(camera->GetNode()->m_scene == this);
+
+    m_active_camera = camera;
 }
 
 void Scene::UpdateNodesTransform() {
