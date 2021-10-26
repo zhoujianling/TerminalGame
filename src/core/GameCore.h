@@ -2,12 +2,13 @@
 
 #include <memory>
 
-namespace game {
-    class Game;
+namespace view {
+
 }
 
 namespace core {
 
+    class Game;
     class KeyboardInput;
     class TerminalController;
 
@@ -23,7 +24,11 @@ public:
 
     void CreateGame();
 
-    game::Game* GetGame() { return m_game.get(); }
+    Game* GetGame() { return m_game.get(); }
+
+    KeyboardInput* GetInput() { return m_input.get(); }
+
+    static GameCore* GetInstance();
 
 private:
     void TickModel();
@@ -36,7 +41,8 @@ private:
     std::unique_ptr<KeyboardInput> m_input;
     std::unique_ptr<TerminalController> m_terminal;
 
-    std::unique_ptr<game::Game> m_game;
+    std::unique_ptr<Game> m_game;
+
 
 };
 

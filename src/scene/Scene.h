@@ -11,6 +11,29 @@ namespace scene {
 
     class Sprite;
 
+// std::map<int, int>::iterator;
+
+template<typename K, typename V>
+struct MapValueIterator {
+public:
+    using MapIterator = typename std::map<K, V>::iterator;
+    MapValueIterator(MapIterator iter)
+    // : m_current_iter(m.begin())
+    : m_iter(iter)
+    {
+    }
+
+    V& operator*() { return m_iter->second; }
+    void operator++() { ++m_iter; }
+    bool operator==(const MapValueIterator& rhs) { return m_iter == rhs.m_iter;}
+    bool operator!=(const MapValueIterator& rhs) { return m_iter != rhs.m_iter;}
+
+private:
+    MapIterator m_iter;
+    // std::map<K, V>::iterator m_current_iter;
+};
+using SceneNodeIterator = MapValueIterator<std::string, SceneNode*>;
+
 class Scene : public core::ITickable {
     friend class Game;
 public:
@@ -27,9 +50,14 @@ public:
 
     SceneNode* FindSceneNode(const std::string& name);
 
+    SceneNode* GetRoot() { return & m_root; }
+
     Camera* GetActiveCamera() { return m_active_camera; }
 
     void SetActiveCamera(Camera* camera);
+
+    SceneNodeIterator begin() { return SceneNodeIterator(m_all_nodes.begin()); }
+    SceneNodeIterator end() { return SceneNodeIterator(m_all_nodes.end()); }
 
 private:
 

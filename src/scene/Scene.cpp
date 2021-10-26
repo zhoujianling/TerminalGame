@@ -28,6 +28,10 @@ void Scene::Tick(float delta_time) {
     // todo: node release
 
     UpdateNodesTransform();
+
+    for (auto* node : *this) {
+        node->Tick(delta_time);
+    }
 }
 
 scene::Sprite* Scene::CreateSprite() {

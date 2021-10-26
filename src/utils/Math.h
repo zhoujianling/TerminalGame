@@ -41,6 +41,8 @@ public:
 
     Matrix3 operator* (const Matrix3& rhs) const;
 
+    Vector3 operator* (const Vector3& rhs) const;
+
 public:
     float m_val[9];
 };

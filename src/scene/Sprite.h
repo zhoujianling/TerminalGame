@@ -1,26 +1,19 @@
 #pragma once
 #include "Component.h"
+#include <string>
 
 namespace scene {
 
-// decoupled from sprite
-class SpritePattern {
-
-};
-
-// class SpritePatternFactory {
-
-// };
 
 class Sprite : public ComponentBase {
 
 public:
     ~Sprite() override {}
 
-    ComponentType GetType() override  { return ComponentType::Sprite; }
+    ComponentType GetType() const override  { return ComponentType::Sprite; }
 
 private:
-    SpritePattern m_pattern;
+    std::string m_appearance_id;
 
 };
 

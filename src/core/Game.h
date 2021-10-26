@@ -15,7 +15,7 @@ namespace scene {
 } // namespace scene
 
 
-namespace game {
+namespace core {
 
 class Game : public core::ITickable {
     friend class core::GameCore;
@@ -33,6 +33,7 @@ public:
     }
 
 private:
+    // game has scene
     std::vector<std::unique_ptr<scene::Scene> > m_scenes;
 
     scene::Scene* m_active_scene = nullptr;

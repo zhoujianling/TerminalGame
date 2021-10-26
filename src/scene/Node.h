@@ -9,41 +9,64 @@
 namespace scene {
     class ComponentBase;
 
-class SceneNode {
-    friend class Scene;
 
-public:
+    struct ComponentIterator {
 
-    ~SceneNode();
+    public:
+        ComponentIterator(std::vector<std::unique_ptr<ComponentBase> >::iterator iter)
+        : m_iter(iter) {}
 
-    Transform& GetTransform() { return m_transform; }
+        ComponentBase* operator*() { return m_iter->get(); }
+        void operator++() { ++m_iter; }
+        bool operator!=(const ComponentIterator& rhs) { return m_iter != rhs.m_iter; }
+    
+    private:
+        std::vector<std::unique_ptr<ComponentBase> >::iterator m_iter;
+    };
 
-    const Transform& GetWorldTransform() { return m_world_transform; }
 
-    void Attach(SceneNode* node);
+    class SceneNode {
+        friend class Scene;
 
-    void Detach(SceneNode* node);
+    public:
 
-    void AddComponent(ComponentBase* comp);
+        ~SceneNode();
 
-private:
-    SceneNode(const std::string& name);
+        Transform& GetTransform() { return m_transform; }
 
-private:
-    Transform m_transform; // owns it
+        const Transform& GetWorldTransform() { return m_world_transform; }
 
-    Transform m_world_transform; // updated by scene
+        void Attach(SceneNode* node);
 
-    std::set<SceneNode*> m_children;
+        void Detach(SceneNode* node);
 
-    std::vector<std::unique_ptr<ComponentBase> > m_components;
+        void Tick(float delta_time);
 
-    SceneNode* m_parent = nullptr;    
+        void AddComponent(ComponentBase* comp);
 
-    Scene* m_scene = nullptr;    
+        Scene* GetScene() const { return m_scene; }
 
-    std::string m_name;
+        ComponentIterator begin() { return ComponentIterator(m_components.begin()); }
+        ComponentIterator end() { return ComponentIterator(m_components.end()); }
 
-};
+    private:
+        SceneNode(const std::string& name);
+
+    private:
+        Transform m_transform; // owns it
+
+        Transform m_world_transform; // updated by scene
+
+        std::set<SceneNode*> m_children;
+
+        std::vector<std::unique_ptr<ComponentBase> > m_components;
+
+        SceneNode* m_parent = nullptr;    
+
+        Scene* m_scene = nullptr;    
+
+        std::string m_name;
+
+    };
 
 }

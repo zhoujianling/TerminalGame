@@ -21,6 +21,8 @@ public:
 
     void WriteText(const std::string& text);
 
+    void WriteChar(int row, int col, char ch);
+
     void Fill();
 
     void Present();

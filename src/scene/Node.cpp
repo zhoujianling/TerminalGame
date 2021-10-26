@@ -30,6 +30,14 @@ void SceneNode::Detach(SceneNode* node) {
     node->m_parent = nullptr;
 }
 
+void SceneNode::Tick(float delta_time) {
+    for (auto* comp : *this) {
+        if (comp->CanTick()) {
+            comp->Tick(delta_time);
+        }
+    }
+}
+
 void SceneNode::AddComponent(ComponentBase* comp) {
     m_components.emplace_back();
     m_components.back().reset(comp);

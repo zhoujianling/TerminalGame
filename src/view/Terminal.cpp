@@ -1,6 +1,6 @@
 #include "Terminal.h"
 #include "assert.h"
-#include "Common.h"
+#include "../core/Common.h"
 
 namespace core {
 
@@ -30,7 +30,7 @@ int WindowsTerminal::Initialize() {
 
     SMALL_RECT window_region; 
     COORD buffer_coord; 
-    BOOL fSuccess; 
+    // BOOL fSuccess; 
 
     const auto width = 120;
     const auto height = 10;
@@ -93,6 +93,12 @@ void WindowsTerminal::WriteText(const std::string& text) {
         m_buffer_back[char_idx].Char.AsciiChar = (text[char_idx]);
         m_buffer_back[char_idx].Attributes = 0x0002;
     }
+}
+
+void WindowsTerminal::WriteChar(int row, int col, char ch) {
+    const auto char_idx = row * m_buffer_size.X + col;
+    m_buffer_back[char_idx].Char.AsciiChar = ch;
+    m_buffer_back[char_idx].Attributes = 0x0002;
 }
 
 void WindowsTerminal::Present() {

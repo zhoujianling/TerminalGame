@@ -10,7 +10,7 @@ public:
 
     ~Camera() override {}
 
-    ComponentType GetType() override  { return ComponentType::Camera; }
+    ComponentType GetType() const override  { return ComponentType::Camera; }
 
 private:
 
